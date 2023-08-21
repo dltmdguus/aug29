@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zoe.web.dao.AdminDAO">
+
+
+	<select id="adminLogin" parameterType="Map" resultType="Map">
+		select
+		count(*) as count, m_name, m_grade
+		from members
+		where m_id = #{id} AND
+		m_pw = #{pw}
+	</select>
+
+	<select id="list" resultType="Map">
+		SELECT * FROM notice ORDER BY nno
+		DESC
+	</select>
+
+	<insert id="noticeWrite" parameterType="Map">
+		INSERT INTO notice (ntitle, ncontent, m_no
+		<if test="#{upFile != null and upFile != ''}">,norifile</if>)
+		VALUES (#{title}, #{content}, #{mno}
+		<if test="#{upFile != null and upFile != ''}">, #{upFile}</if>)
+	</insert>
+
+</mapper>

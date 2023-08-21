@@ -65,6 +65,7 @@ public class MultiBoardController {
 		System.out.println(mbno);
 		Map<String, Object> detail = mbService.mbdetail(mbno);
 		model.addAttribute("detail", detail);
+		System.out.println(detail);
 		return "mbdetail";
 	}
 	

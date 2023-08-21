@@ -19,7 +19,7 @@
 	
 	<select id="mbdetail" parameterType="Integer" resultType="Map">
 		SELECT mb_no, mb_title, mb_content, mb_date, mb_read, mb_board, m_name
-		FROM multiboard 
+		FROM multiview 
 		WHERE mb_no=#{mbno}	
 	</select>
 </mapper>
