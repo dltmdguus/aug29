@@ -18,9 +18,9 @@
 
 	<insert id="noticeWrite" parameterType="Map">
 		INSERT INTO notice (ntitle, ncontent, m_no
-		<if test="#{upFile != null and upFile != ''}">,norifile</if>)
+		<if test="#{upFile != null and upFile != ''}">,norifile, nrealfile</if>)
 		VALUES (#{title}, #{content}, #{mno}
-		<if test="#{upFile != null and upFile != ''}">, #{upFile}</if>)
+		<if test="#{upFile != null and upFile != ''}">, #{upFile}, #{realFile}</if>)
 	</insert>
 
 </mapper>

@@ -1,6 +1,8 @@
 package com.zoe.web.util;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -20,11 +22,11 @@ public class Util {
 		try {
 			result = Integer.parseInt(str);
 		} catch (Exception e) {
-			//String re = "";// 숫자인것만 모을 스트링입니다.
+			// String re = "";// 숫자인것만 모을 스트링입니다.
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < str.length(); i++) {
 				if (Character.isDigit(str.charAt(i))) {// 숫자인지 물어봄
-					//re += str.charAt(i);// 숫자만 모아서
+					// re += str.charAt(i);// 숫자만 모아서
 					sb.append(str.charAt(i));
 				}
 			}
@@ -72,8 +74,8 @@ public class Util {
 		}
 		return ip;
 	}
-	
-	//숫자인지 확인하기
+
+	// 숫자인지 확인하기
 	public boolean isNum(Object obj) {
 		try {
 			Integer.parseInt(String.valueOf(obj));
@@ -82,10 +84,25 @@ public class Util {
 			return false;
 		}
 	}
-	   public int obj2Int(Object obj) {
-		      
-		      return Integer.parseInt(String.valueOf(obj));
-		   
-		   }
-	
+
+	public int obj2Int(Object obj) {
+		return Integer.parseInt(String.valueOf(obj));
+	}
+
+	// 경로 얻어오기
+	public HttpServletRequest getCurrentRequest() {
+		return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+	}
+	public HttpServletResponse getCurrentResponse() {
+		return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+	}
+	//세션 얻어오기
+	public HttpSession getSession() {
+	      return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+	   }
+	//업로드 폴더까지의 경로 얻어오기
+	public String uploadPath() {
+	      return getCurrentRequest().getServletContext().getRealPath("/upload");
+	   }
+
 }

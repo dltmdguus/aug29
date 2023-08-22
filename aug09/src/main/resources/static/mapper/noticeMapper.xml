@@ -5,6 +5,24 @@
 	<select id="list" resultType="Map">
 		SELECT *
 		FROM notice
+		WHERE ndel = 1
+		ORDER BY nno DESC
+		LIMIT 0, 10
 	</select>
 
+	<select id="detail" parameterType="Integer" resultType="Map">
+		SELECT
+		ntitle, ncontent, m_no, ndate, nrealfile FROM notice WHERE nno=#{nno }
+	</select>
+
+	<select id="nWriter" parameterType="Integer" resultType="String">
+		SELECT m_name FROM members WHERE m_no= (SELECT m_no FROM notice WHERE
+		nno=#{nno })
+	</select>
+	
+	<select id="getOriFileName" parameterType="String" resultType="String">
+		SELECT norifile
+		FROM notice
+		WHERE nrealfile = #{fileName}
+	</select>
 </mapper>
