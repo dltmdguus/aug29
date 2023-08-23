@@ -112,10 +112,10 @@ public class Util {
 	      return getCurrentRequest().getServletContext().getRealPath("/upload");
 	   }
 	 public void htmleMailSender(Map<String, Object> map) throws EmailException {
-	      String emailAddr = "phyho@outlook.com"; //보내는사람
-	      String passwd= "skehahffk7";//메일의 암호
-	      String name = "승현이가 보냄"; //보내는 사람 이름
-	      String hostname = "smtp.office365.com"; //smtp 주소
+	      String emailAddr = mail.emailAddr;// 보내는 사람
+	      String passwd = mail.passwd;// 메일의 암호를 넣어주세요.
+	      String name = "스프링에서 보냄";// 보내는 사람 이름
+	      String hostname = mail.hostname;// smtp 주소
 	      int port = 587; //포트알기
 	      
 	      
