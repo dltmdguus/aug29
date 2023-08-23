@@ -34,7 +34,7 @@
 					메시지 관리
 					<div id="comment" >메시지를 관리합니다.</div>
 				</div>
-				<div class="box" style="background-color: #AFEEEE;" onclick="url('mail')">
+				<div class="box" style="background-color: #FFB6C1;" onclick="url('mail')">
 					메일 관리
 					<div id="comment" >메일을 관리합니다.</div>
 				</div>

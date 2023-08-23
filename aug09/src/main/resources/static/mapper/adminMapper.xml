@@ -23,4 +23,12 @@
 		<if test="#{upFile != null and upFile != ''}">, #{upFile}, #{realFile}</if>)
 	</insert>
 
+	<select id="noticeDetail" parameterType="Integer" resultType="String">
+		SELECT ncontent FROM notice WHERE nno=#{nno}
+	</select>
+	
+	<update id="noticeHide" parameterType="Integer">
+		UPDATE notice SET ndel = if(ndel = 1, 0, 1)
+		WHERE nno=#{nno}
+	</update>
 </mapper>

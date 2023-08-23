@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -11,6 +12,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +22,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonMapFormatVisitor;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zoe.web.service.AdminService;
+import com.zoe.web.service.NoticeService;
 import com.zoe.web.util.Util;
 
 @Controller
@@ -152,4 +163,53 @@ public class AdminController {
 	public String mail() {
 		return "admin/mail";
 	}
+	
+	 @PostMapping("/mail")
+	  public String mail(@RequestParam Map<String, Object> map) throws EmailException {
+		 util.htmleMailSender(map);
+	  return "admin/mail";
+	  }
+	  
+	  //noticeDetail
+	 @ResponseBody
+	 @PostMapping("/noticeDetail")
+	 public String noticeDetail(@RequestParam("nno") int nno) {
+		 System.out.println(nno);
+		 
+		 //jackson 사용해보기
+		 ObjectNode json = JsonNodeFactory.instance.objectNode();
+		 
+		 //json.put("name", "홍길동");
+		 //해야할 일
+		 /*1. 데이터 베이스에 물어보기 -> nno로 -> 본문내용 가져오기
+		  *2. jackson에 담아주세요.
+		  */
+//		 Map<String, Object> maaaap = new HashMap<String, Object>();
+//		 maaaap.put("bno", 123);
+//		 maaaap.put("btitle", 1234);
+//		 
+//		 ObjectMapper jsonMap = new ObjectMapper();
+//		 
+//		 try {
+//			json.put("map", jsonMap.writeValueAsString(maaaap));
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+		 
+		 json.put("noticeDetail", adminService.noticeDetail(nno));
+		 return json.toString();
+	 }
+	 
+	 //noticeHide
+	 @ResponseBody
+	 @PostMapping("/noticeHide")
+	 public String noticeHide(@RequestParam("nno") int nno) {
+		int result = adminService.noticeHide(nno);
+		ObjectNode json = JsonNodeFactory.instance.objectNode();
+		json.put("result", result);
+		 return json.toString();
+		 		
+	 }
+		
+	
 }
