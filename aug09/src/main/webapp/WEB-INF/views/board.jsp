@@ -89,7 +89,34 @@
 				error:function(error){alert("에러가 발생했습니다. 다시 시도하지 마십시오.");}
 			});
 		});
-	});
+	});	
+	
+	//function detail
+	function detail(bno) {
+		//alert(bno + "번을 클릭했습니다.");
+		$.ajax({
+			url:"./detail2",
+			type: "post",
+			data: {bno: bno},
+			dataType: "json",
+			success:function(data){
+				$(".modal-title").text(data.btitle);
+				name = name + '<img class="" src="./img/edit.png"> <img class="del" src="./img/delete.png">';
+				name += '<input type="hidden" class="bno" value="'+data.bno+'">';
+				name += '<input type="hidden" class="uuid" value="'+data.uuid+'">';
+				$(".detail-name").html(name);
+				$(".detail-date").text(data.bdate);
+				$(".detail-read").text(data.blike);
+				$(".detail-content").html(data.bcontent);
+				$(".detail-ip").html(data.bip);
+				$("#exampleModal").modal("show");
+			},
+			error:function(error){alert("에러가 발생했습니다. 다시 시도하지 마십시오.");}
+		});
+
+	}
+		
+	
 	</script>
 </head>
 <body>
@@ -110,8 +137,8 @@
                		</tr>
                		</thead>
                		<tbody><c:forEach items="${list }" var="row">
-               		<tr class="row detail">
-               			<td class="col-1">${row.bno}</td>
+               		<tr class="row" onclick="detail(${row.bno})">
+               			<td class="col-1">${row.rowNum}</td>
                			<td class="col-5 title">${row.btitle}<c:if test="${row.commentcount ne 0 }">&nbsp;<span class="badge bg-secondary">${row.commentcount}</span></c:if></td>
                			<td class="col-2">${row.m_name}</td>
                			<td class="col-1">${row.bdate}</td>

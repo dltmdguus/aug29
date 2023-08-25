@@ -18,17 +18,41 @@
 
 	<insert id="noticeWrite" parameterType="Map">
 		INSERT INTO notice (ntitle, ncontent, m_no
-		<if test="#{upFile != null and upFile != ''}">,norifile, nrealfile</if>)
+		<if test="#{upFile != null and upFile != ''}">,norifile, nrealfile</if>
+		)
 		VALUES (#{title}, #{content}, #{mno}
-		<if test="#{upFile != null and upFile != ''}">, #{upFile}, #{realFile}</if>)
+		<if test="#{upFile != null and upFile != ''}">, #{upFile}, #{realFile}</if>
+		)
 	</insert>
 
-	<select id="noticeDetail" parameterType="Integer" resultType="String">
+	<select id="noticeDetail" parameterType="Integer"
+		resultType="String">
 		SELECT ncontent FROM notice WHERE nno=#{nno}
 	</select>
-	
+
 	<update id="noticeHide" parameterType="Integer">
-		UPDATE notice SET ndel = if(ndel = 1, 0, 1)
+		UPDATE notice SET ndel =
+		if(ndel = 1, 0, 1)
 		WHERE nno=#{nno}
 	</update>
+
+	<select id="setupboardList" resultType="Map">
+		SELECT * FROM setupboard
+		ORDER BY b_no ASC
+	</select>
+	
+   <insert id="multiBoardInsert" parameterType="Map">
+      INSERT INTO setupboard (b_catename, b_url, b_comment, mb_cate)
+      VALUES (#{name }, CONCAT('./multiboard?board=',#{cateNum}), #{comment }, #{cateNum})
+   </insert>
+   
+   <select id="memberList" resultType="Map">
+	  SELECT m_no, m_id, m_name, m_joindate, m_addr, m_grade, m_birth, m_mbti, m_gender
+  	  FROM members
+   </select>
+   
+   <update id="gradeChange" parameterType="Map">
+      UPDATE members SET m_grade = #{grade } WHERE m_no=#{mno}
+   </update>
+   
 </mapper>

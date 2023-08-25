@@ -3,21 +3,36 @@
 <mapper namespace="com.zoe.web.dao.BoardDAO">
 
 	<select id="boardList" resultType="BoardDTO">
-		SELECT bno, btitle, m_name, m_id, bdate, blike, bip, commentcount
-		FROM boardview LIMIT 0, 10
+		SELECT ff.*, m.m_id , m.m_name
+		FROM(
+			SELECT @ROWNUM:=@ROWNUM+1 AS rowNum, bb.*, (SELECT COUNT(*) FROM board WHERE bdel=1) AS COUNT
+			FROM (SELECT b.* FROM board b, (SELECT @ROWNUM:=0) AS R) bb
+			WHERE bdel=1
+			ORDER BY bb.bno ASC
+			) as ff join members m on ff.m_no = m.m_no
+		order by bno desc
+		LIMIT 0, 10
 	</select>
-	
-	<select id="detail" parameterType="Integer" resultType="BoardDTO">
+
+	<select id="detail" parameterType="Integer"
+		resultType="BoardDTO">
 		SELECT bcontent, uuid, bip FROM boardview WHERE bno=#{bno }
 	</select>
 
 	<insert id="write" parameterType="BoardDTO">
-		INSERT INTO board (btitle, bcontent, m_no, bip, uuid)
-		VALUES(#{btitle }, #{bcontent }, (SELECT m_no FROM members WHERE m_id=#{m_id }), #{bip }, #{uuid })
+		INSERT INTO board (btitle,
+		bcontent, m_no, bip, uuid)
+		VALUES(#{btitle }, #{bcontent }, (SELECT
+		m_no FROM members WHERE m_id=#{m_id }), #{bip }, #{uuid })
 	</insert>
-	
+
 	<update id="readUP" parameterType="Integer">
-		UPDATE board SET blike = blike + 1 WHERE bno=#{bno } 
+		UPDATE board SET blike = blike
+		+ 1 WHERE bno=#{bno }
 	</update>
+	
+	<select id="detail2" parameterType="Integer" resultType="BoardDTO">
+		SELECT * FROM boardview WHERE bno=#{bno}
+	</select>
 
 </mapper>
