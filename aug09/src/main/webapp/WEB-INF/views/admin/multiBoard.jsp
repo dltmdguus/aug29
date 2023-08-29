@@ -16,7 +16,7 @@
 	height: 30px;
 	line-height: 30px;
 	padding: 5px;
-	background-color: gray;
+	background-color: #FFA07A;
 }
 .input-forn input, .input-form button{
 	width: 19%;
@@ -25,6 +25,10 @@
 	padding: 0;
 	height: 20px;
 	vertical-align: middle;
+}
+
+.table-head{
+	background-color:#FFA07A;
 }
 </style>
 </head>

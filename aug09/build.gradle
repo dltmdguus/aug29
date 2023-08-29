@@ -37,7 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-tomcat' //runtime시에만 필요, 실행환경에서 제공되는 dependency를 설정
 	implementation 'org.json:json:20230227'
 	// log
-   implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+   //implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
    // 이메일 보내기
    implementation 'org.apache.commons:commons-email:1.5'
 }

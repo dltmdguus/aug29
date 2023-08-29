@@ -26,13 +26,13 @@
 					회원 관리
 					<div id="comment" >회원을 관리합니다.</div>
 				</div>
-				<div class="box" style="background-color: #9ACD32;" onclick="url('comment')">
-					댓글 관리
-					<div id="comment" >댓글을 관리합니다.</div>
+				<div class="box" style="background-color: #9ACD32;" onclick="url('air')">
+					공기질 관리
+					<div id="comment" >공기질 관리합니다.</div>
 				</div>
-				<div class="box" style="background-color: #98FB98;" onclick="url('mail')">
-					메시지 관리
-					<div id="comment" >메시지를 관리합니다.</div>
+				<div class="box" style="background-color: #98FB98;" onclick="url('corona')">
+					코로나
+					<div id="comment" >코로나</div>
 				</div>
 				<div class="box" style="background-color: #FFB6C1;" onclick="url('mail')">
 					메일 관리

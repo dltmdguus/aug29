@@ -9,11 +9,13 @@ body{
 	height: 100vh;
 }
 .menu{
+	position: fixed;
 	width: 50px;
 	height: 100vh;
 	background-color:#6495ED	;
 	float: left;
 	overflow: hidden;
+	z-index:9;
 }
 .menu:hover{
 	width: 200px;

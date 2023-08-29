@@ -30,7 +30,7 @@
 	text-align: center;
 }
 .table-head{
-	background-color: gray;
+	background-color: #F0E68C;
 	font-weight: bold;
 	text-align: center;
 }

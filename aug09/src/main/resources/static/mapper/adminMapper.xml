@@ -40,19 +40,65 @@
 		SELECT * FROM setupboard
 		ORDER BY b_no ASC
 	</select>
+
+	<insert id="multiBoardInsert" parameterType="Map">
+		INSERT INTO
+		setupboard (b_catename, b_url, b_comment, mb_cate)
+		VALUES (#{name },
+		CONCAT('./multiboard?board=',#{cateNum}), #{comment },
+		#{cateNum})
+	</insert>
+
+	<select id="memberList" resultType="Map">
+		SELECT m_no, m_id, m_name,
+		m_joindate, m_addr, m_grade, m_birth, m_mbti,
+		m_gender
+		FROM members
+	</select>
+
+	<update id="gradeChange" parameterType="Map">
+		UPDATE members SET
+		m_grade = #{grade } WHERE m_no=#{mno}
+	</update>
+
+	<select id="boardList" resultType="Map">
+		SELECT mb_cate, b_catename,
+		b_url
+		FROM setupboard
+	</select>
+
+	<select id="post" parameterType="Map" resultType="Map">
+		SELECT m.mb_no, m.mb_board, s.b_catename, m.mb_title, m.mb_date,
+		m.mb_read, m.mb_del,
+		m.m_no, e.m_id, e.m_name,
+		(
+		SELECT COUNT(*)
+		FROM multiboard m JOIN members e ON m.m_no = e.m_no
+		<where>
+			<if test="cate gt 0">AND mb_board = #{cate}</if>
+			<choose>
+				<when test="searchN == 'title'">AND m.mb_title LIKE CONCAT('%', #{searchV }, '%')</when>
+				<when test="searchN == 'content'">AND m.mb_content LIKE CONCAT('%', #{searchV }, '%')</when>
+				<when test="searchN == 'nick'">AND e.m_name LIKE CONCAT('%', #{searchV }, '%')</when>
+				<when test="searchN == 'id'">AND e.m_id LIKE CONCAT('%', #{searchV }, '%')</when>
+			</choose>
+		</where>
+		) as count
+		FROM (multiboard m join setupboard s ON m.mb_board = s.mb_cate)
+		JOIN members e ON m.m_no = e.m_no
+		<where>
+			<if test="cate gt 0">AND mb_board = #{cate}</if>
+			<choose>
+				<when test="searchN == 'title'">AND m.mb_title LIKE CONCAT('%', #{searchV }, '%')</when>
+				<when test="searchN == 'content'">AND m.mb_content LIKE CONCAT('%', #{searchV }, '%')</when>
+				<when test="searchN == 'nick'">AND e.m_name LIKE CONCAT('%', #{searchV }, '%')</when>
+				<when test="searchN == 'id'">AND e.m_id LIKE CONCAT('%', #{searchV }, '%')</when>
+			</choose>
+		</where>
+		ORDER BY mb_no DESC
+	</select>
 	
-   <insert id="multiBoardInsert" parameterType="Map">
-      INSERT INTO setupboard (b_catename, b_url, b_comment, mb_cate)
-      VALUES (#{name }, CONCAT('./multiboard?board=',#{cateNum}), #{comment }, #{cateNum})
-   </insert>
-   
-   <select id="memberList" resultType="Map">
-	  SELECT m_no, m_id, m_name, m_joindate, m_addr, m_grade, m_birth, m_mbti, m_gender
-  	  FROM members
-   </select>
-   
-   <update id="gradeChange" parameterType="Map">
-      UPDATE members SET m_grade = #{grade } WHERE m_no=#{mno}
-   </update>
-   
+	<select id="postDetail" parameterType="Integer" resultType="String">
+		SELECT mb_content from multiboard where mb_no = #{mbno}
+	</select>
 </mapper>

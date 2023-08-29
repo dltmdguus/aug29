@@ -51,4 +51,17 @@ public class AdminService {
 		return adminDAO.gradeChange(map);
 	}
 
+
+	public List<Map<String, Object>> boardList() {
+		return adminDAO.boardList();
+	}
+
+	public List<Map<String, Object>> post(Map<String, Object> map) {
+		return adminDAO.post(map);
+	}
+
+	public String postDetail(int mbno) {
+		return adminDAO.postDetail(mbno);
+	}
+
 }
